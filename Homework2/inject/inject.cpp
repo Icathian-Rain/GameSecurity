@@ -475,7 +475,7 @@ int main()
 	TCHAR dst_t[] = L"FlappyBird.exe";
 	WCHAR dllPath_t[] = L"C:\\Users\\22057\\Documents\\study\\class\\gamesecurity\\homework2\\inject\\x64\\Debug\\test.dll";
 	// importTableInject(dst, dllPath);
-	//remoteInjectDll(dst_t, dllPath_t);
+	// remoteInjectDll(dst_t, dllPath_t);
 	// setWindowHookEx_inject(dllPath_t);
 	apc_inject(dst_t, dllPath_t);
 	system("pause");
