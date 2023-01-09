@@ -178,3 +178,87 @@ rdi为鸟对象实例，而rdi+64即为score地址
 
 ![image-20230109174147641](assets/image-20230109174147641.png)
 
+## 四、使用程序集注入方式
+
+### 1、编写注入函数
+
+Loader.cs
+
+```c#
+namespace InjectDll
+{
+    public class Loader
+    {
+        static UnityEngine.GameObject gameObject;
+        public static void Load()
+        {
+            gameObject = new UnityEngine.GameObject();
+            gameObject.AddComponent<Cheat>();
+            UnityEngine.Object.DontDestroyOnLoad(gameObject);
+        }
+        public static void Unload()
+        {
+            UnityEngine.Object.Destroy(gameObject);
+        }
+    }
+}
+```
+
+cheat.cs
+
+```c#
+public class Cheat : UnityEngine.MonoBehaviour
+    {
+        private void OnGUI()
+        {
+            UnityEngine.GUI.Label(new Rect(0, 0, 100, 100), "Hack!\nPress F1: score + 1000\nPress F2: 无敌\nPress F3: 取消无敌");
+        }
+        public void FixedUpdate()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.F1))
+            {
+                //分数 + 1000
+                var bs = UnityEngine.GameObject.FindWithTag("Player").GetComponent<BirdScripts>();
+                if (bs != null)
+                {
+                    bs.score = bs.score + 1000;
+                }
+            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.F2))
+            {
+                // 无敌
+                var Player = UnityEngine.GameObject.FindWithTag("Player");
+                var bs = Player.GetComponent<BirdScripts>();
+                Player.GetComponent<Collider2D>().isTrigger = true;
+            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.F3))
+            {
+                //取消无敌
+                var Player = UnityEngine.GameObject.FindWithTag("Player");
+                var bs = Player.GetComponent<BirdScripts>();
+                Player.GetComponent<Collider2D>().isTrigger = false;
+            }
+        }
+    }
+```
+
+通过读取按键F1：来搜索Player对象，使对象的score+1000来达到修改分数的目的
+
+### 2、使用sharpMonoInjector进行注入
+
+将注入程序集编译为dll
+
+使用sharpMonoInjector进行注入
+
+![image-20230109204257097](assets/image-20230109204257097.png)
+
+注入成功，左上角显示输出信息
+
+![image-20230109204320496](assets/image-20230109204320496.png)
+
+### 3、测试结果
+
+按下F1后，分数增加1000分，测试成功
+
+![image-20230109204350721](assets/image-20230109204350721.png)
+
