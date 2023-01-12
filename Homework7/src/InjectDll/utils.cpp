@@ -15,7 +15,12 @@ void calCs(Entity player, Vec3 pos, Vec2 &angular, Vec2 &angularDiff)
 		angular.x = fabs(angular.x - 180);
 	}
 	angularDiff.x = angular.x - yaw;
-	angularDiff.y = angular.y - pitch;
+	// 跨0轴的两种情况，修复
+	if (angularDiff.x > 180)
+		angularDiff.x -= 360;
+	else if (angularDiff.x <= -180)
+		angularDiff.x += 360;
+	angularDiff.y = pitch - angular.y;
 }
 
 // 更新实体的朝向
