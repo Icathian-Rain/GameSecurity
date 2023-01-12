@@ -53,7 +53,7 @@ void init()
     TextCOLOR = RGB(255, 255, 255);
     // 获取AssaultCube窗口
     hwndAC_Client = FindWindowA(0, ("AssaultCube")); // Gets Window
-    // 获取AssaultCube窗口的width
+    // 获取AssaultCube窗口的width,height
     RECT rect;
     GetWindowRect(hwndAC_Client, &rect);
     windowWidth = rect.right - rect.left;

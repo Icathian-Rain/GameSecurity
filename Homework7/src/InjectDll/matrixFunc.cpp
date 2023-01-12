@@ -77,7 +77,7 @@ bool WorldToScreenWithoutMatrix(Vec2& screen, float yawDiff, float pitchDiff)
     // 计算窗口中x坐标
     screen.x = (float)(windowWidth / 2 + diff1);
     // 计算垂直差
-    int diff2 = (int)(tan(pitchDiff * PI / 180) * (windowHeight / 2));
+    int diff2 = (int)(tan(pitchDiff * PI / 180) * (windowWidth / 2));
     // 计算窗口中y坐标
     screen.y = (float)(windowHeight / 2 + diff2);
     return true;
