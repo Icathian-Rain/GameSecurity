@@ -4,3 +4,6 @@ x64
 FlappyBird
 bin
 obj
+
+AssaultCube*
+Assembly-CSharp.dll
