@@ -174,10 +174,10 @@ void func4()
         {
             // 计算准星角度差
             Entity *entityPtr = &entityList[i];
-            float difference = fabs(entityPtr->HAngularDifference.x);
+            float difference = fabs(entityPtr->HAngularDifference.x) + fabs(entityPtr->HAngularDifference.y);
             if (closestEntity != nullptr)
             {
-                if (entityPtr->team != player.team && entityPtr->health > 0 && entityPtr->health < 100 && difference < fabs(closestEntity->HAngularDifference.x))
+                if (entityPtr->team != player.team && entityPtr->health > 0 && entityPtr->health < 100 && difference < fabs(closestEntity->HAngularDifference.x) + fabs(closestEntity->HAngularDifference.y))
                     closestEntity = entityPtr;
             }
             else
